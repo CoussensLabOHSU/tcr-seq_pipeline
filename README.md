@@ -12,6 +12,8 @@ TCR-SEQ TOOLS
 
 This repository contains all of the tools needed to run a TCRseq pipeline from accessing the files on nix (formerly mpssr) to performing QC on output.
 
+![Pipeline Diagram](https://github.com/CoussensLabOHSU/tcr-seq_pipeline/blob/master/pipeline_diagram.png)
+
 GENERAL NOTES
 ==============
 
