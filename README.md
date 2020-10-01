@@ -50,23 +50,24 @@ are being sent to.
     ├──spike_counts/
     ├──slurm_logs/
     └──tools/
-├── 3. Copy files from nix to exacloud
-    ├── 00.sbatchmd5.sh 
-        ├──IN=$data/fastqs_from_core/fastqs/
-        └── MYBIN=$tool/10_preProcess/00_process.md5.R 
-├── 4. run MultiQC
-├── 5. Rename files
+├── 3. Copy files from nix to exacloud with `rsync -rv` command
+├── 4. run MultiQC & analyze html report
+	└── multiqc --interactive --export
+├── 5. Check fastq.gz file transfer from nix
+	├──IN=$data/fastqs_from_core/fastqs/
+        └──MYBIN=$tool/10_preProcess/00_process.md5.R
+├── 6. Rename files
     └── 01_rename_fastqs.R
-├── 6. Unzip files for downstream analysis
+├── 7. Unzip files for downstream analysis
     └── 02_sbatchUnzip.sh
         └──IN=$data/fastqs_from_core/fastqs 
-├── 7. Run PEAR to concatenate files
+├── 8. Run PEAR to concatenate files
     └── 03_sbatchPear.sh 
         ├──IN=$data/fastqs_from_core/fastqs
         ├──OUT=$data/peared_fastqs/ 
         ├──MYBIN=$tool/10_preProcess/03_pear.pl
         └──QC=$data/QC/pear/
-├── 8. Process spikes
+├── 9. Process spikes
     ├── Count
     │   ├── 9bp
     │   |   └──10_sbatchCountSpikes9.sh
@@ -85,7 +86,7 @@ are being sent to.
             ├──OUT=$data/mixcr/despiked_fastqs
             ├──REMOUT=$data/spike_counts/9bp/spikes
             └──MYBIN=$tool/20_processSpikes/remove.spikes.R 
-├── 9. Identify Clotypes
+├── 10. Identify Clotypes
     └── DNA
        ├── 30_sbatchMixcrAlign.sh
        ├── IN=$data/mixcr/despiked_fastqs
@@ -93,21 +94,21 @@ are being sent to.
        ├── REPORTDIR=$data/mixcr/reports/
        ├── PRESET=$tool/30_mixcr/analyze_preset.txt
        └── MYBIN=$tool/30_mixcr/mixcr-3.0.3/mixcr.jar
-├── 10. Decontaminate
+├── 11. Decontaminate
     └── 40_sbatchDecontaminate.sh
           ├── IN=$data/mixcr/export_clones/
           ├── OUT=$data/normalization/decontam/
           ├── QC=$data/QC/std/
           └── MYBIN=$tool/40_postProcess/decontaminateClones.R
-├── 11. Normalize
+├── 12. Normalize
     ├── calculate.scaling.factor.R
     └── 50_sbatchNormalize.sh
           ├── IN=$data/normalization/
           ├── REF=$tool/40_postProcess/nb_counts/
           └── MYBIN=$tool/40_postProcess/normalizeClones.R
-├── 12. PostProcess
+├── 13. PostProcess
     └── 60_sbatchQC.sh
-├── 13. Analyze
+├── 14. Analyze
     ├── 70_sbatchDiversityAnalysis.sh
     |     ├── IN=$data/normalization/normalized_clones/ 
     |     ├── MYBIN=$tool/60_analysis/diversityAnalysis.R
@@ -139,8 +140,8 @@ are being sent to.
                 └── OUT=Rare_clones.txt
                 └── OUT=Small_clones.txt
                 └── OUT=summary_clones.txt
-├── 14. Generate summary Output
-├── 15. Report and communicate
+├── 15. Generate summary Output
+
 
 ``` 
 
