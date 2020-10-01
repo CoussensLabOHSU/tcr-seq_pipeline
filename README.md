@@ -114,7 +114,36 @@ are being sent to.
     └── 60_sbatchQC.sh
 ├── 13. Analyze
     ├── 70_sbatchDiversityAnalysis.sh
-    └── 80_sbatchClonalDivisionSummary.sh
+    |     ├── IN=$data/normalization/normalized_clones/ 
+    |     ├── MYBIN=$tool/60_analysis/diversityAnalysis.R
+    |     └── OUT=$data/QC/std/
+    |           └── IN=count.spikes.25bp.QC.summary.txt
+    |           └── IN=count.spikes.9bp.QC.summary.txt
+    |           └── IN=contaminationQC.txt
+    |           └── IN=mixcr.alignment.QC.summary.txt
+    |           └── IN=mixcr.assembly.QC.summary.txt
+    |           └── IN=remove.spikes.QC.result.txt
+    |           └── OUT=LIB190228LC.txt
+    ├── 80_sbatchClonalDivisionSummary.sh  # clonotype homeostasis analysis
+    |     ├── IN=$data/normalization/normalized_clones/ 
+    |     ├── META=$data/QC/meta/meta.txt
+    |     ├── MYBIN=$tool/60_analysis/clonalDivisionSummary.R
+    |     └── OUT=$data/QC/cloneDiv/
+    |           └── OUT=cumFreqHomeo.pdf
+    |           └── OUT=cumHomeo.xlsx
+    |           └── OUT=meanHomeo.xlsx
+    └── 90_sbatchGroupClones.sh  # by different frequency types
+          ├── IN=$data/normalization/normalized_clones/ 
+          ├── MYBIN=$tool/60_analysis/groupClones.R
+          ├── META=$data/QC/meta/meta.txt
+          └── OUT=$data/freqGroups/
+                └── OUT=full.clones.txt
+                └── OUT=hyperexpanded_clones.txt
+                └── OUT=Large_clones.txt
+                └── OUT=Medium_clones.txt
+                └── OUT=Rare_clones.txt
+                └── OUT=Small_clones.txt
+                └── OUT=summary_clones.txt
 ├── 14. Generate summary Output
 ├── 15. Report and communicate
 
@@ -130,14 +159,14 @@ RUNNING THE PIPELINE: DIRECTORY SET UP & ENV VARS
     ~$ <enter password>
     ```
 
-1. Create a location on ExaCloud for storing the project files, by creating a new directory in the tcrseq project area:
+2. Create a location on ExaCloud for storing the project files, by creating a new directory in the tcrseq project area:
 
     ```
-     ~$ cd /path/to/data/tcrseq/dhaarini/
+     ~$ cd /home/exacloud/gscratch/CoussensLab/tcr_analysis
      ~$ mkdir DNAXXXXXLC
      ```
 
-1. Create environment variables for the data and tool directories for easy access to them. You will also need these to be set for the condor\_submit scripts to work correctly.
+3. Create environment variables for the data and tool directories for easy access to them. You will also need these to be set for the condor\_submit scripts to work correctly.
 
     a. Open your `~/.bash_profile` (or `~/.bashrc`)
 
@@ -146,16 +175,16 @@ RUNNING THE PIPELINE: DIRECTORY SET UP & ENV VARS
     b. Enter these lines:
 
      ```
-     data=/path/to/data/tcrseq/dhaarini/NEW_DIR/
+     data=/home/exacloud/gscratch/CoussensLab/tcr_analysis/NEW_LIBXXXXXXLC
      export data
-     tool=/path/to/this/repo/installation/
+     tool=/home/exacloud/gscratch/CoussensLab/tcr_sequencing_tools  # path to the tools used to run this pipeline
      export tool
      ```
 
 
     c. Don't forget to source: `~$ . ~/.bashrc`
 
-    d. In the directory you created, create the following folder structure by calling `~$ sh $tool/misc/setup.sh`. If you are running an RNAseq analysis, just add any character string as an argument, in order to get the appropriate directory structre: `~$ sh $tool/misc/setup.sh y`.
+    d. In the directory you created, create the following folder structure by calling `~$ sh $tool/setup.sh`. If you are running an RNAseq analysis, just add any character string as an argument, in order to get the appropriate directory structre: `~$ sh $tool/setup.sh y`.
 
 ```
         ├── fastqs_from_core
@@ -254,17 +283,20 @@ PREPROCESS
 ## Copy Files
 The Core places the files on their IGL server, nix (formerly mpssr). You will need access to this server in order to copy files to exacloud.
 
-1. Use scp or rsync to copy the fastq files from the Core's IGL server (nix) to the fastqs\_from\_core directory on ExaCloud. For example:  
+1. Use the instructions provided by the Core to find the files on the IGL server.  (You can ssh into the server if necessary – the Core typically provides a temporary password giving you access for ~two weeks. Run `cd /data/LIBXXXXXXLC` for the given library and the directory right bellow. Run `ls` to find this directory structure
+
+```
+    FastQC  LIB200902LC  readme.txt  Reports  Stats
+```
+
+2. From this directory in nix, use rsync to copy the fastq and FASTQC files from the Core's IGL server (nix) to the fastqs\_from\_core directory on ExaCloud. For example:  
 
      ```
-     ~% pwd
-     /path/to/data/tcrseq/dhaarini/DNAXXXXLC
-     ~% rsync -rv FastQC/* username@exacloud.ohsu.edu:/home/exacloud/lustre1/CompBio/data/tcrseq/dhaarini/DNAXXXXLC/fastqs_from_core
-     /path/to/tcrseq/dhaarini/DNAXXXXLC/fastqs\_from\_core/fastqs
+    rsync -rv FastQC/* username@exacloud.ohsu.edu:/home/exacloud/gscratch/CoussensLab/tcr_analysis/LIBXXXXXXLC/fastqs_from_core/FastQC
+    rsync -rv LIBXXXXXXLC/* username@exacloud.ohsu.edu:/home/exacloud/gscratch/CoussensLab/tcr_analysis/LIBXXXXXXLC/fastqs_from_core/fastqs
      ```
-1. Use the instructions provided by the Core to find the files on the IGL server.  (You can ssh into the server if necessary – the Core typically provides a temporary password giving you access for ~two weeks.)
 
-1. Copy the fastQC files over to the corresponding directory. The rest of the data can be copied to "extras"
+3. Back to gscratch on exacloud, copy the FASTQC files over to the corresponding directory (for example, html: `mv *.html html/`). The rest of the data can be copied to "extras".
 
 ## FastQC
 1. Inspect the fastQC files to identify any problematic samples. MultiQC generates an html file that we will have to transfer to our local machine to view. We first have to run MultiQC. To do this, you must either specify the full path to the MultiQC executable, or add `export PATH="/home/exacloud/lustre1/BioCoders/Applications/miniconda3/bin:$PATH"` to your `~/.bashrc` or `~/.bash_profile`. This example assumes you have not added the conda path.
