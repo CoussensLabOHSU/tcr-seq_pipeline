@@ -26,7 +26,7 @@ The new servers (exahead1 and exahead2) use the slurm job scheduler, not condor,
 
 > Use `nohup` command to prevent interuption such as `nohup sbatch 30_sbatchMixcrAnalyze.sh &`. This will also generate a log of job submissions named nohup.txt, which is useful for troubleshooting  in case of slurm failure.
 
-> Check to see if all files were output correctly (I had issues with 4 files being skipped during a test run) before moving forward to the next step of the pipeline. Use the pipeline overview below for troubleshooting and trace back.
+> Word of advice: Check to see if all files were output correctly before moving to next step of the pipeline by running `ls -v`
 
 PIPELINE OVERVIEW
 =================
@@ -330,12 +330,12 @@ Verify that your file transfer was successful by calculating the MD5sums of the 
 
 1. The process.md5.R script will compute the MD5sums for the files, which can be checked with those provided by the core:
      ```
-     ~% cd ./tools/slurm
+     ~% cd $tool/slurm
      ~% sbatch 00_sbatchmd5.sh
      ```
 1. Compare to core values
      ```
-     ~$ diff DNA150826LC/calculated.md5.sums.txt DNA150826LC/md5sum.sorted.txt
+     ~$ diff DNAXXXXXXLC/calculated.md5.sums.txt DNAXXXXXXLC/md5sum.sorted.txt
      ```
 1. If any MD5sums differ, retransfer the appropriate files and recheck their MD5sums. Move the three MD5sums files into the md5 directory.
 
@@ -501,16 +501,15 @@ but they have been placed inside of a bash script that will run them all simulta
 ```
 ANALYZE
 ========
-There are a few different standard analyses that can be run. 
-Some of these require a metadata file that contains treatment information.
-The one that is always run is `70_sbatchDiversityAnalysis.sh` 
-which generates a text file containing standard diversity statistics such as clonality, shannon entropy, etc. 
-There are also variations of this script that allow you to subset for clones 
-of certain frequency groups only or certain numbers of top clones.  
+There are a few different standard analyses that can be run. For meaningful information, you are going to need to upload a meta.txt file based on the data provided from lab technician during library prep (check other analyzed samples for more details). Save the metadata to the current library's path: `$data/QC/meta/`, as it is called in the bash scripts bellow.
 
-There is also the clonotype homeostasis analysis, 
-`80_sbatchClonalDivisionSummary.sh` which creates a few excel workbooks and some homeostasis plots. 
-Finally you can group clones and subset them based on those groupings.  
+
+1. Run diversity analysis with `70_sbatchDiversityAnalysis.sh` which generates a text file containing standard diversity statistics such as clonality, shannon entropy, etc. There are also variations of this script that allow you to subset for clones 
+of certain frequency groups only or certain numbers of top clones (see below).  
+
+2. Run clonotype homeostasis analysis with `80_sbatchClonalDivisionSummary.sh` which creates a few excel workbooks and some homeostasis plots. Depending on the experiment, you may or may not have some of the columns on the metadata (for example, tissue and type). This post-analysis is highly customizable. 
+
+3. You can also group clones and subset them based on those groupings by running `90_sbatchGroupClones.sh`.  
 
 Run any of these scripts just like you have been for the other sbatch scripts.
 
