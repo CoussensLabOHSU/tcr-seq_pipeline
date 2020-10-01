@@ -15,13 +15,10 @@ This repository contains all of the tools needed to run a TCRseq pipeline from a
 <img src="pipeline_diagram.png" alt="drawing" width="600"/>
 
 
-
 GENERAL NOTES
 ==============
 
 Remember to create an interactive job on ExaCloud when running interactive and computationally-intensive jobs.  For example:
-
-     `~% condor_submit -interactive -append 'request_memory = 10 GB' -append 'request_cpus = 4'`  
 
      `~% srun --mincpus 4 --mem 4G --time 1-00 --pty bash`
 
@@ -88,7 +85,6 @@ are being sent to.
             ├──OUT=$data/mixcr/despiked_fastqs
             ├──REMOUT=$data/spike_counts/9bp/spikes
             └──MYBIN=$tool/20_processSpikes/remove.spikes.R 
-
 ├── 9. Identify Clotypes
     └── DNA
        ├── 30_sbatchMixcrAlign.sh
@@ -103,7 +99,6 @@ are being sent to.
           ├── OUT=$data/normalization/decontam/
           ├── QC=$data/QC/std/
           └── MYBIN=$tool/40_postProcess/decontaminateClones.R
-
 ├── 11. Normalize
     ├── calculate.scaling.factor.R
     └── 50_sbatchNormalize.sh
@@ -181,10 +176,9 @@ RUNNING THE PIPELINE: DIRECTORY SET UP & ENV VARS
      export tool
      ```
 
-
     c. Don't forget to source: `~$ . ~/.bashrc`
 
-    d. In the directory you created, create the following folder structure by calling `~$ sh $tool/setup.sh`. If you are running an RNAseq analysis, just add any character string as an argument, in order to get the appropriate directory structre: `~$ sh $tool/setup.sh y`.
+    d. In the directory you created, generate the following folder structure by calling `~$ sh $tool/setup.sh`. If you are running an RNAseq analysis, just add any character string as an argument, in order to get the appropriate directory structre: `~$ sh $tool/setup.sh y`.
 
 ```
         ├── fastqs_from_core
