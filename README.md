@@ -496,22 +496,23 @@ After running the script above, you should have the following files under the `$
 ```
 count.spikes.25bp.QC.summary.txt  
 count.spikes.9bp.QC.summary.txt  
-LIB200630LC_contaminationQC.txt  
+LIBXXXXXXLC_contaminationQC.txt  
 mixcr.alignment.QC.summary.txt  
 mixcr.assembly.QC.summary.txt  
 remove.spikes.QC.result.txt
 ```
+
 ANALYZE
 ========
 There are a few different standard analyses that can be run. For meaningful information, you are going to need to upload a meta.txt file based on the data provided from lab technician during library prep (check other analyzed samples for more details). Save the metadata to the current library's path: `$data/QC/meta/`, as it is called in the bash scripts bellow.
 
 
-1. Run diversity analysis with `70_sbatchDiversityAnalysis.sh` which generates a text file containing standard diversity statistics such as clonality, shannon entropy, etc. There are also variations of this script that allow you to subset for clones 
+1. Run _Diversity Analysis_ with `70_sbatchDiversityAnalysis.sh` which generates a text file containing standard diversity statistics such as clonality, shannon entropy, etc. There are also variations of this script that allow you to subset for clones 
 of certain frequency groups only or certain numbers of top clones (see below).  
 
-2. Run clonotype homeostasis analysis with `80_sbatchClonalDivisionSummary.sh` which creates a few excel workbooks and some homeostasis plots. Depending on the experiment, you may or may not have some of the columns on the metadata (for example, tissue and type). This post-analysis is highly customizable. 
+2. Run _Clonotype Homeostasis Analysis_ with `80_sbatchClonalDivisionSummary.sh` which creates a few excel workbooks and some homeostasis plots. Depending on the experiment, you may or may not have some of the columns on the metadata (for example, tissue and type). This post-analysis is highly customizable. 
 
-3. You can also group clones and subset them based on those groupings by running `90_sbatchGroupClones.sh`.  
+3. You can also _group clones_ and subset them based on those groupings by running `90_sbatchGroupClones.sh`.  
 
 Run any of these scripts just like you have been for the other sbatch scripts.
 
@@ -524,16 +525,5 @@ Run the combineQC.R script in the QC tool directory:
 ~$ Rscript $tool/QC/combineQC.R /path/to/QC/dir /path/to/QC/dir
 ```
 
-You should have the following sheets, comprised of the corresponding QC file:
-```
- PEAR:   pear\_summary\_log.txt
- counts:  count.spikes.QC.summary.txt
- spike\_removal:  remove.spikes.QC.result.txt
- mixcr\_alignment:  mixcr.alignment.QC.summary.txt
- mixcr\_assembly:  mixcr.assemble.QC.summary.txt
- decontamination: DNAXXXXLC_contaminationQC.txt
- normalization: aggregate\_normalization\_factor\_QC.txt
- nonStandard_VHits: nonStandard_VHits.txt
- analysis: uniques.shannon.clonality.txt
-```
+
 
