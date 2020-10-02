@@ -303,27 +303,17 @@ The Core places the files on their IGL server, nix (formerly mpssr). You will ne
      ~$ /path/to/BioCoders/Applications/miniconda3/bin/multiqc --interactive --export .
      ```
 
-2. A new file called `multiqc_report.html` will be created in the FastQC directory. You can either copy this to your local, and then view it in a web browser:
+2. A new file called `multiqc_report.html` will be created in the FastQC directory. Create a directory under the TCRseq Box folder and save it. Open with a web browser and discuss library quality.
 
      ```
      # THIS IS ON LOCAL COMPUTER # 
      ~$ pwd
-     /path/to/temp/dir/
-     ~$ scp username@exacloud:/path/to/DNAXXXXLC/fastqs\_from\_core/FastQC/multiqc_report.html ./
+     /Users/username/Box/TCRseq/results/LIB200630LC/multiqc/
+     ~$ scp username@exacloud:/path/to/DNAXXXXLC/fastqs\_from\_core/FastQC/multiqc_report.html .
      ~$ open multiqc_report.html
      ```
 
-or you can view it directly from exacloud. This option requires that you `ssh` into exacloud with the `-X` flag, and also have XQuartz installed:
 
-```
-# LOCAL #
-~$ ssh -X username@exacloud
-# Remote #
-~$ cd /path/to/FastQC/dir/
-~$ firefox
-# A new firefox browser should automatically open
-# Press ctrl + o to search for the multiqc file, and select it
-```
 
 ## MD5sums
 Verify that your file transfer was successful by calculating the MD5sums of the files and comparing them to the MD5sums provided by the core.  
@@ -388,8 +378,7 @@ waiting for one set of 10 to finish before submitting another. If there were 130
 ```
 
 The PEAR program produces fastq files of the assembled reads, but it also produces files containing all discarded reads, 
-as well as all unassembled reads. Everything is output the the `$data/peared_fastqs/assembled/` directory, 
-so the other files will need to be moved to their corresponding directories.
+as well as all unassembled reads. Everything is output the the `$data/peared_fastqs/` directory. All files must be moved to their corresponding directories.
 
 PROCESS SPIKES
 ===============
