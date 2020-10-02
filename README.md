@@ -483,6 +483,7 @@ We have to do some more pre-processing before we are ready to normalize.
      ~$ sbatch 50_sbatchNormalize.sh
      ```
 
+
 POSTPROCESS
 =============
 Now we need to run all of the QC scripts. Each script can be run individually, 
@@ -490,6 +491,15 @@ but they have been placed inside of a bash script that will run them all simulta
 ```
 ~$ cd $data/tools/slurm
 ~$ sbatch 60_sbatchQC.sh
+```
+After running the script above, you should have the following files under the `$data/QC/std/` directory:
+```
+count.spikes.25bp.QC.summary.txt  
+count.spikes.9bp.QC.summary.txt  
+LIB200630LC_contaminationQC.txt  
+mixcr.alignment.QC.summary.txt  
+mixcr.assembly.QC.summary.txt  
+remove.spikes.QC.result.txt
 ```
 ANALYZE
 ========
