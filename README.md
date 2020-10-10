@@ -518,6 +518,8 @@ Run any of these scripts just like you have been for the other sbatch scripts.
 
 Summary Output
 ===============
+Prepare a powerpoint presentation for discussing both multiQC.html reports results (read quality) and output metrics from the softwares used in the pipeline in order to disregard problematic samples. Run `61_sbatchPlotQC.sh` to generate plots with QC metrics (counts, spike read distribution, level of contamination,etc).
+
 After running all of the QC scripts, and the analysis, combine the outputs into an excel workbook. 
 Run the combineQC.R script in the QC tool directory:
 
