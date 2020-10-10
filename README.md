@@ -141,8 +141,12 @@ are being sent to.
                 └── OUT=Small_clones.txt
                 └── OUT=summary_clones.txt
 ├── 15. Generate summary Output
-
-
+    └── 61_sbatchPlotQC.sh
+    	├── pearQC.R
+    	├── readAndCloneQC.R
+	├── readAndContamQC.R
+    	├── spikeQC.R
+    	└── fastQC_sequenceQuality.R
 ``` 
 
 RUNNING THE PIPELINE: DIRECTORY SET UP & ENV VARS
@@ -518,7 +522,7 @@ Run any of these scripts just like you have been for the other sbatch scripts.
 
 Summary Output
 ===============
-Prepare a powerpoint presentation for discussing both multiQC.html reports results (read quality) and output metrics from the softwares used in the pipeline in order to disregard problematic samples. Run `61_sbatchPlotQC.sh` to generate plots with QC metrics (counts, spike read distribution, level of contamination,etc).
+Prepare a powerpoint presentation for discussing both multiQC.html reports results (read quality) and output metrics from the softwares used in the pipeline in order to disregard problematic samples. Run `61_sbatchPlotQC.sh` to run multiple R scripts and generate plots for reads, contamination, spike count, PEAR and FastQC.
 
 After running all of the QC scripts, and the analysis, combine the outputs into an excel workbook. 
 Run the combineQC.R script in the QC tool directory:
