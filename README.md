@@ -120,11 +120,11 @@ are being sent to.
     |           └── IN=mixcr.assembly.QC.summary.txt
     |           └── IN=remove.spikes.QC.result.txt
     |           └── OUT=LIBXXXXXX.txt
-├── 71_sbatchSubsetDiversityAnalysis.sh
+    ├── 71_sbatchSubsetDiversityAnalysis.sh
     |     ├── IN=$data/normalization/normalized_clones/ 
     |     ├── MYBIN=$tool/60_analysis/subsetDiversityAnalysis.R 
     |     └── OUT=$data/QC/std/ 
-├── 72_sbatchFreqGroupDiversityAnalysis.sh
+    ├── 72_sbatchFreqGroupDiversityAnalysis.sh
     |     ├── IN=$data/freqGroups/BATCH_full_clones.txt 
     |     ├── MYBIN=$tool/60_analysis/freqGroupDiversityAnalysis.R  
     |     └── OUT=$data/QC/std/
@@ -136,18 +136,17 @@ are being sent to.
     |           └── OUT=cumFreqHomeo.pdf
     |           └── OUT=cumHomeo.xlsx
     |           └── OUT=meanHomeo.xlsx
-    └── 90_sbatchGroupClones.sh  # by different frequency types
-          ├── IN=$data/normalization/normalized_clones/ 
-          ├── MYBIN=$tool/60_analysis/groupClones.R
-          ├── META=$data/QC/meta/meta.txt
-          └── OUT=$data/freqGroups/
-                └── OUT=full.clones.txt
-                └── OUT=hyperexpanded_clones.txt
-                └── OUT=Large_clones.txt
-                └── OUT=Medium_clones.txt
-                └── OUT=Rare_clones.txt
-                └── OUT=Small_clones.txt
-                └── OUT=summary_clones.txt
+    ├── 90_sbatchGroupClones.sh  # by different frequency types
+    |     ├── IN=$data/normalization/normalized_clones/ 
+    |      ├── MYBIN=$tool/60_analysis/groupClones.R
+    |      ├── META=$data/QC/meta/meta.txt
+    |      └── OUT=$data/freqGroups/
+    └── 91_sbatchGroupClones.sh  # by different frequency types
+          ├── IN1=$data/normalization/collapsed_clones/
+          ├── IN2=$data/freqGroups/collapse_groupData/newNorm/LIB170920LC_full_clones.txt
+          ├── OUT=$data/vdjtools/
+          ├── MYBIN=$tool/60_analysis/subsetByGroup.R
+          └── QC=$data/QC/
 ├── 15. Generate summary Output
     └── 61_sbatchPlotQC.sh
     	├── pearQC.R
