@@ -119,7 +119,15 @@ are being sent to.
     |           └── IN=mixcr.alignment.QC.summary.txt
     |           └── IN=mixcr.assembly.QC.summary.txt
     |           └── IN=remove.spikes.QC.result.txt
-    |           └── OUT=LIB190228LC.txt
+    |           └── OUT=LIBXXXXXX.txt
+├── 71_sbatchSubsetDiversityAnalysis.sh
+    |     ├── IN=$data/normalization/normalized_clones/ 
+    |     ├── MYBIN=$tool/60_analysis/subsetDiversityAnalysis.R 
+    |     └── OUT=$data/QC/std/ 
+├── 72_sbatchFreqGroupDiversityAnalysis.sh
+    |     ├── IN=$data/freqGroups/BATCH_full_clones.txt 
+    |     ├── MYBIN=$tool/60_analysis/freqGroupDiversityAnalysis.R  
+    |     └── OUT=$data/QC/std/
     ├── 80_sbatchClonalDivisionSummary.sh  # clonotype homeostasis analysis
     |     ├── IN=$data/normalization/normalized_clones/ 
     |     ├── META=$data/QC/meta/meta.txt
@@ -512,19 +520,27 @@ There are a few different standard analyses that can be run. For meaningful info
 
 
 1. Run _Diversity Analysis_ with `70_sbatchDiversityAnalysis.sh` which generates a text file containing standard diversity statistics such as clonality, shannon entropy, etc. There are also variations of this script that allow you to subset for clones 
-of certain frequency groups only or certain numbers of top clones (see below).  
+of certain frequency groups only or certain numbers of top clones (see below). 
 
-2. Run _Clonotype Homeostasis Analysis_ with `80_sbatchClonalDivisionSummary.sh` which creates a few excel workbooks and some homeostasis plots. Depending on the experiment, you may or may not have some of the columns on the metadata (for example, tissue and type). This post-analysis is highly customizable. 
+2. Run _Group clones_ with `90_sbatchGroupClones.sh` to generate different frequency classifications that will be used for other downstream analysis
 
-3. You can also _group clones_ and subset them based on those groupings by running `90_sbatchGroupClones.sh`.  
+3. Run _Diversity Analysis on a subset_ with `71_sbatchSubsetDiversityAnalysis.sh` on the top clones to calculate Shannon Entropy, unique clones, max clone count, gini index, etc.
 
-Run any of these scripts just like you have been for the other sbatch scripts.
+4. Run _Frequent Groups Diversity Analysis_ with the script `72_sbatchFreqGroupDiversityAnalysis.sh` to get diversity analysis on selected group (Hyperexpanded, Large, Medium, Rare).
+
+5. Run _Clonotype Homeostasis Analysis_ with `80_sbatchClonalDivisionSummary.sh` which creates a few excel workbooks and some homeostasis plots. Depending on the experiment, you may or may not have some of the columns on the metadata (for example, tissue and type). This post-analysis is highly customizable. 
+
+ 
 
 Summary Output
 ===============
-Prepare a powerpoint presentation for discussing both multiQC.html reports results (read quality) and output metrics from the softwares used in the pipeline in order to disregard problematic samples. Run `61_sbatchPlotQC.sh` to run multiple R scripts and generate plots for reads, contamination, spike count, PEAR and FastQC.
 
-After running all of the QC scripts, and the analysis, combine the outputs into an excel workbook. 
+Prepare a **powerpoint presentation** for discussing both multiQC.html reports results (read quality) and output metrics from the softwares used in the pipeline in the `60_sbatchQC.sh` in order to remove problematic samples from the final analysis. 
+
+Run `61_sbatchPlotQC.sh` to run multiple R scripts and generate plots for reads, contamination, spike count, PEAR and FastQC.
+
+
+After running all of the QC scripts, and the analysis, combine the outputs into an **excel workbook**. 
 Run the combineQC.R script in the QC tool directory:
 
 ```
