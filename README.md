@@ -136,17 +136,11 @@ are being sent to.
     |           └── OUT=cumFreqHomeo.pdf
     |           └── OUT=cumHomeo.xlsx
     |           └── OUT=meanHomeo.xlsx
-    ├── 90_sbatchGroupClones.sh  # by different frequency types
-    |     ├── IN=$data/normalization/normalized_clones/ 
-    |      ├── MYBIN=$tool/60_analysis/groupClones.R
-    |      ├── META=$data/QC/meta/meta.txt
-    |      └── OUT=$data/freqGroups/
-    └── 91_sbatchGroupClones.sh  # by different frequency types
-          ├── IN1=$data/normalization/collapsed_clones/
-          ├── IN2=$data/freqGroups/collapse_groupData/newNorm/LIB170920LC_full_clones.txt
-          ├── OUT=$data/vdjtools/
-          ├── MYBIN=$tool/60_analysis/subsetByGroup.R
-          └── QC=$data/QC/
+    └── 90_sbatchGroupClones.sh  # by different frequency types
+          ├── IN=$data/normalization/normalized_clones/ 
+          ├── MYBIN=$tool/60_analysis/groupClones.R
+          ├── META=$data/QC/meta/meta.txt
+          └── OUT=$data/freqGroups/
 ├── 15. Generate summary Output
     └── 61_sbatchPlotQC.sh
     	├── pearQC.R
