@@ -470,23 +470,26 @@ any contamination.
 NORMALIZE
 ==========  
 Skip this step if you have RNAseq data.  
-We have to do some more pre-processing before we are ready to normalize. 
-1. Copy the 25-bp spike files to the normalization directory.
-    ```
-    ~$ cp $data/spike_counts/25bp/counts/* $data/normalization
-    ```
+We have to do some more pre-processing before we are ready to normalize.
+
+1. Copy the 25-bp spike files to the normalization/count directory.
+```
+~$ cp $data/spike_counts/25bp/counts/* $data/normalization/count
+```
 2. Calculate the scaling factor
-     ```
-     ~$ cd /path/to/normalization/dir/
-     ~$ Rscript $tool/40_postProcess/calculate.scaling.factor.R /path/to/normalization/counts/ $tool/00_reference/text_barcodesvj.txt 
-     ```
+```
+~$ cd $data/normalization/
+~$ Rscript $tool/40_postProcess/calculate.scaling.factor.R /path/to/normalization/counts/ $tool/00_reference/text_barcodesvj.txt 
+```
+A scaling_factor.txt file will be created.
+
 3. Normalize the clones
-     ```
-     ~$ cd $data/tools/slurm
-     ~$ vi 50_sbatchNormalize.sh
-       < change --array argument to be 1-X >
-     ~$ sbatch 50_sbatchNormalize.sh
-     ```
+```
+~$ cd $data/tools/slurm
+~$ vi 50_sbatchNormalize.sh
+  < change --array argument to be 1-X >
+~$ nohup sbatch 50_sbatchNormalize.sh &
+ ```
 
 
 POSTPROCESS
