@@ -16,7 +16,7 @@ suppressMessages(suppressWarnings(library(ShortRead)));
 suppressMessages(library(data.table));
 
 arguments <- commandArgs(trailingOnly=TRUE);
-input.fastq <- arguments[1];
+input.fastq <- arguments[1]; # peared_fastqs/assembled files
 spike.file <- arguments[2]; # for example: text_barcodesvj.txt
 spike.length <- arguments[3]; # typically 9 for spike removal and 25 for normalization
 output.dir <- arguments[4]; # results are output here
