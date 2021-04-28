@@ -11,7 +11,7 @@
 
 suppressMessages(library(data.table))
 suppressMessages(library(optparse))
-source("/home/exacloud/lustre1/users/hortowe/2016_11_27_stable_repos/WesPersonal/utilityFxns.R")
+source("/home/exacloud/gscratch/CoussensLab/tcr_sequencing_tools/misc/utilityFxns.R")
 
 ### TODO - should change outFile to outDir and write out the complete file, but also each frequency division as well
 
