@@ -93,7 +93,7 @@ for(i in 1:length(rawFiles_v))  {
     nbCountCol_v <- grep("nb.clone.count", colnames(currNorm_dt), value = T)
     nbFreqCol_v <- grep("nb.clone.fraction", colnames(currNorm_dt), value = T)
 
-    ## Basic QC - check that CDR3 sequences are teh same
+    ## Basic QC - check that CDR3 sequences are the same
     currRaw_CDR3 <- currRaw_dt[[cdr3Col_v]]
     currNorm_CDR3 <- currNorm_dt[[cdr3Col_v]]
     
