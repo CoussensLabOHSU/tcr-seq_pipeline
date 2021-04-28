@@ -1,16 +1,15 @@
 # Designed and developed by Jacob Bieker (jacob@bieker.tech)
 
-# Script reads in a csv file containing spiked read counts from TCR sequencing, and calculates the 
-# what number is needed to change the counts of each spiked read to the mean. 
-# Using the spiked reads, it finds the corresponding VJ region in a MiTCR-formatted CSV file
-# It then normalizes the count for each region in the MiTCR file using the multiples from the spikes
+# Script reads in a csv file containing spiked read counts from TCR sequencing, and calculates the
+# number needed to change the counts of each spiked read to the mean. 
+# Using the spiked reads, it finds the corresponding VJ region in a MiXCR-formatted CSV file
+# It then normalizes the count for each region in the MiXCR file using the multiples from the spikes
 #
 # Assumptions:
-#   1.  A CSV file, named "<MiTCR File>xout.csv" per MiTCR file of the format ID,spike,count
-#   2.  A MiTCR csv file per CSV file
+#   1.  A CSV file, named "<MiXCR File>xout.csv" per MiXCR file of the format ID,spike,count
+#   2.  A MiXCR csv file per CSV file
 #   3.  A CSV file detailing the barcode-to-VJ-region 
 #   4.  Spiked reads are supposed to be present in the exact same frequency
-
 
 
 #   load dependencies
