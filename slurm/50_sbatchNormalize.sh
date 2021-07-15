@@ -60,7 +60,7 @@ printf "\n\n"
 RAWCLONE=$IN/decontam/$CURRFILE
 SPIKECOUNTS=$IN/counts/$BASE\S$SNUM\.assembled.spike.counts.25bp.txt
 NORMDIR=$IN/normalized_clones/
-ORIGSCALE=$IN/scaling_factor.txt
+ORIGSCALE=$IN/globalScalingFactor.txt
 NBSCALE=$REF/nb.scaling.factors.txt
 
 echo "Raw Count input: " $RAWCLONE
