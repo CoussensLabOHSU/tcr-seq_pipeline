@@ -19,10 +19,10 @@
 
 ### SET I/O VARIABLES
 
-IN1=$data/normalization/collapsed_clones/             # Directory containing all input files. Should be one job per file
-IN2=$data/freqGroups/collapse_groupData/newNorm/LIB170920LC_full_clones.txt
+IN1=$data/normalization/normalized_clones/             # Directory containing all input files. Should be one job per file
+IN2=$data/freqGroups/LIB170920LC_full_clones.txt
 GRP=
-OUT=$data/vdjtools/           # Directory where output files should be written
+OUT=$data//           # Directory where output files should be written
 QC=$data/QC/
 MYBIN=$tool/60_analysis/subsetByGroup.R          # Path to shell script or command-line executable that will be used
 
@@ -59,7 +59,7 @@ for i in {0..6}; do
     echo "Current group designation: " $CURRGRP
     echo "Current output directory: " $OUT/$CURRDIR/
 
-    cmd="/home/exacloud/gscratch/CoussensLab/howellsf/R-4.0.2/bin/bin/Rscript $MYBIN -i $IN1 -f $IN2 -d $CURRGRP -o $OUT/$CURRDIR/ -l F" 
+    cmd="/home/exacloud/gscratch/CoussensLab/howellsf/R-4.0.2/bin/Rscript $MYBIN -i $IN1 -f $IN2 -d $CURRGRP -o $OUT/$CURRDIR/ -l F" 
 
     echo $cmd
     eval $cmd

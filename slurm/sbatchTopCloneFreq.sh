@@ -16,7 +16,7 @@ REST=T
 
 for DIR in "${DIRS[@]}"; do
 
-	data=$dha/$DIR
+	data=$DIR
 	
 	MYBIN=$tool/60_analysis/topCloneFreq.R
 	IN=$data/normalization/normalized_clones/
