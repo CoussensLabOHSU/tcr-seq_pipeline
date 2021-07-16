@@ -45,7 +45,7 @@ printf "\n\n"
 
 DIV="10,25,50,100"
 
-cmd="/home/exacloud/gscratch/CoussensLab/howellsf/R-4.0.2/bin/bin/Rscript $MYBIN $IN $OUT FALSE $DIV" 
+cmd="/home/exacloud/gscratch/CoussensLab/howellsf/R-4.0.2/bin/Rscript $MYBIN $IN $OUT FALSE $DIV" 
 
 echo $cmd
 eval $cmd

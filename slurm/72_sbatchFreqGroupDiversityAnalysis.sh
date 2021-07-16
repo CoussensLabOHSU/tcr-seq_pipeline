@@ -45,7 +45,7 @@ printf "\n\n"
 
 FREQGRP="Hyperexpanded"
 
-cmd="/home/exacloud/gscratch/CoussensLab/howellsf/R-4.0.2/bin/bin/Rscript $MYBIN $IN $OUT FALSE $FREQGRP" 
+cmd="/home/exacloud/gscratch/CoussensLab/howellsf/R-4.0.2/bin/Rscript $MYBIN $IN $OUT FALSE $FREQGRP" 
 
 echo $cmd
 eval $cmd
