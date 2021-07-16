@@ -44,7 +44,7 @@ echo "SLURM_TASKS_PER_NODE " $SLURM_TASKS_PER_NODE
 printf "\n\n"
 
 
-cmd="/home/exacloud/gscratch/CoussensLab/howellsf/R-4.0.2/bin/bin/Rscript $MYBIN -b $data -d $IN -m $data/$META -n nb -o $OUT -p DNA,LC -f F -l F" 
+cmd="/home/exacloud/gscratch/CoussensLab/howellsf/R-4.0.2/bin/Rscript $MYBIN -b $data -d $IN -m $data/$META -n nb -o $OUT -p DNA,LC -f F -l F" 
 
 echo $cmd
 eval $cmd

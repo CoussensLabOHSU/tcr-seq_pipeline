@@ -28,14 +28,14 @@ FASTQC=true
 
 ### PEAR
 if $PEAR; then
-	Rscript $TOOL/pearQC.R \
+	/home/exacloud/gscratch/CoussensLab/howellsf/R-4.0.2/bin/Rscript $TOOL/pearQC.R \
 		--inputDir $DATA/QC/pear/ \
 		--outDir $OUT
 fi
 
 ### READS AND CLONES
 if $CLONE; then
-	Rscript $TOOL/readAndCloneQC.R \
+	/home/exacloud/gscratch/CoussensLab/howellsf/R-4.0.2/bin/Rscript $TOOL/readAndCloneQC.R \
 		--contamFile $DATA/QC/std/$PROJ\_contaminationQC.txt \
 		--nineFile $DATA/QC/std/count.spikes.9bp.QC.summary.txt \
 		--outDir $OUT \
@@ -44,7 +44,7 @@ fi
 
 ### READS AND CONTAM
 if $CONTAM; then
-	Rscript $TOOL/readAndContamQC.R \
+	/home/exacloud/gscratch/CoussensLab/howellsf/R-4.0.2/bin/Rscript $TOOL/readAndContamQC.R \
 		--contamFile $DATA/QC/std/$PROJ\_contaminationQC.txt \
 		--nineFile $DATA/QC/std/count.spikes.9bp.QC.summary.txt \
 		--outDir $OUT
@@ -52,7 +52,7 @@ fi
 
 ### SPIKE
 if $SPIKE; then
-	Rscript $TOOL/spikeQC.R \
+	/home/exacloud/gscratch/CoussensLab/howellsf/R-4.0.2/bin/Rscript $TOOL/spikeQC.R \
 		--nine $DATA/spike_counts/9bp/qc \
 		--twentyFive $DATA/spike_counts/25bp/qc \
 		--outDir $OUT
@@ -60,8 +60,7 @@ fi
 
 ### FASTQC
 if $FASTQC; then
-	Rscript $TOOL/fastQC_sequenceQuality.R \
+	/home/exacloud/gscratch/CoussensLab/howellsf/R-4.0.2/bin/Rscript $TOOL/fastQC_sequenceQuality.R \
 	--inputFile $DATA/fastqs_from_core/FastQC/multiqc_data/multiqc_fastqc.txt \
 	--outDir $OUT
 fi
-
